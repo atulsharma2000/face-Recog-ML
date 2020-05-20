@@ -1,7 +1,7 @@
 from keras.applications import VGG16
 img_rows = 224
 img_cols = 224 
-# Re-loads the VGG16 model without the top or FC layers
+
 model = VGG16(weights = 'imagenet', 
                  include_top = False, 
                  input_shape = (img_rows, img_cols, 3))
