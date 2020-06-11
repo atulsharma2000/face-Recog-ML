@@ -1,11 +1,10 @@
-from keras.models import load_model
-classifier = load_model('FaceRecognition.h5')
 import os
 import cv2
 import numpy as np
 from os import listdir
 from os.path import isfile, join
-
+from keras.models import load_model
+classifier = load_model('FR.h5')
 FaceRecognition_dict = {"[0]": "Jhon ","[1]": "RDJ"}
 FaceRecognition_dict_n = {"Jhon": "Jhon","RDJ": "RDJ"}
 def draw_test(name, pred, im):
