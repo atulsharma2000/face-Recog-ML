@@ -1,4 +1,12 @@
+
+from keras.preprocessing.image import ImageDataGenerator
+from keras.layers import Dense, Dropout, Activation, Flatten
+from keras.layers import Conv2D, MaxPooling2D, ZeroPadding2D
+from keras.callbacks import ModelCheckpoint, EarlyStopping
 from keras.applications import VGG16
+from keras.optimizers import Adam
+from keras.models import Model
+
 img_rows = 224
 img_cols = 224 
 
@@ -18,14 +26,8 @@ def addTopModel(bottom_model):
     top_model = Dense(2, activation = "softmax")(top_model)
     return top_model
     from keras.models import Sequential
-from keras.layers import Dense, Dropout, Activation, Flatten
-from keras.layers import Conv2D, MaxPooling2D, ZeroPadding2D
-from keras.models import Model
 
 modelnew = Model(inputs=model.input, outputs=addTopModel(model))
-
-from keras.preprocessing.image import ImageDataGenerator
-
 train_data_dir = 'dataset/train/'
 validation_data_dir = 'dataset/validation/'
 
@@ -54,8 +56,7 @@ validation_generator = validation_datagen.flow_from_directory(
         batch_size=val_batchsize,
         class_mode='categorical',
         shuffle=False)
-from keras.optimizers import Adam
-from keras.callbacks import ModelCheckpoint, EarlyStopping
+
                    
 checkpoint = ModelCheckpoint("FaceRecognition.h5",
                              monitor="val_loss",
@@ -69,10 +70,8 @@ earlystop = EarlyStopping(monitor = 'val_loss',
                           verbose = 1,
                           restore_best_weights = True)
 
-# we put our call backs into a callback list
-callbacks = [earlystop, checkpoint]
 
-# Note we use a very small learning rate 
+callbacks = [earlystop, checkpoint]
 modelnew.compile(loss = 'binary_crossentropy',
               optimizer = Adam(),
               metrics = ['accuracy'])
@@ -90,4 +89,4 @@ history = modelnew.fit_generator(
     validation_data = validation_generator,
     validation_steps = nb_validation_samples // batch_size)
 
-modelnew.save("FaceRecognition.h5")
+modelnew.save("FR.h5")
