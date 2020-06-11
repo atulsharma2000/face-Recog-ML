@@ -27,7 +27,7 @@ while True:
     else:
         print("Face not found")
         pass
-    if cv2.waitKey(1) == 13 or count == 300: #13 is the Enter Key
+    if cv2.waitKey(1) == 13 or count == 300: 
         break        
 cap.release()
 cv2.destroyAllWindows()      
